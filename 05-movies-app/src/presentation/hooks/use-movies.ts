@@ -18,7 +18,7 @@ const useMovies = () => {
     const nowPlayingPromise = UseCases.moviesNowPlayingUseCase(movieDBFetcher);
     const upcomingPromise = UseCases.moviesUpcomingUseCase(movieDBFetcher);
     const topRatedPromise = UseCases.moviesTopRatedUseCase(movieDBFetcher);
-    const popularPromise = UseCases.moviesUpcomingUseCase(movieDBFetcher);
+    const popularPromise = UseCases.moviesPopularUseCase(movieDBFetcher);
     const [nowPlayingMovies, upcomingMovies, topRatedMovies, popularMovies] =
       await Promise.all([
         nowPlayingPromise,
