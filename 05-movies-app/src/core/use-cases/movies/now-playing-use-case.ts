@@ -5,9 +5,14 @@ import {MovieMapper} from '@/infrastructure/mappers/movie-mapper';
 
 export const moviesNowPlayingUseCase = async (
   fetcher: HttpAdapter,
+  page: number,
 ): Promise<Movie[]> => {
   try {
-    const nowPlaying = await fetcher.get<NowPlayingResponse>('/now_playing');
+    let endpoint = '/now_playing';
+    if (page > 1) {
+      endpoint += `?page=${page}`;
+    }
+    const nowPlaying = await fetcher.get<NowPlayingResponse>(endpoint);
 
     return nowPlaying.results.map(MovieMapper.fromMovieDbResultToEntity);
   } catch (error) {

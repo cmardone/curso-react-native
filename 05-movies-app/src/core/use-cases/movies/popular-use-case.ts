@@ -5,9 +5,14 @@ import {MovieMapper} from '@/infrastructure/mappers/movie-mapper';
 
 export const moviesPopularUseCase = async (
   fetcher: HttpAdapter,
+  page: number,
 ): Promise<Movie[]> => {
   try {
-    const popular = await fetcher.get<PopularResponse>('/popular');
+    let endpoint = '/popular';
+    if (page > 1) {
+      endpoint += `?page=${page}`;
+    }
+    const popular = await fetcher.get<PopularResponse>(endpoint);
     return popular.results.map(MovieMapper.fromMovieDbResultToEntity);
   } catch (error) {
     console.log(error);
